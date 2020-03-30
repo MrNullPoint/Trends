@@ -70,7 +70,9 @@ func (tr *Trend) buildDKReq() error {
 	}
 
 	if tr.geo != "" {
-		tr.request.URL.Query().Add("geo", tr.geo)
+		q := tr.request.URL.Query()
+		q.Add("geo", tr.geo)
+		tr.request.URL.RawQuery = q.Encode()
 	}
 
 	tr.request.Header.Set("user-agent", UserAgent)
