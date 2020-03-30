@@ -3,6 +3,7 @@ package Trends
 import (
 	"encoding/json"
 	"encoding/xml"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -79,9 +80,12 @@ func (tr *Trend) buildDKReq() error {
 
 // @function: parse daily keyword response
 func (tr *Trend) parseDKResp() ([]*DailyKeyword, *http.Response, error) {
-	defer tr.response.Body.Close()
+	if tr.response.StatusCode != http.StatusOK {
+		return nil, tr.response, errors.New("google response not correct, maybe not support your location")
+	}
 
 	b, _ := ioutil.ReadAll(tr.response.Body)
+	defer tr.response.Body.Close()
 
 	var rss RssRoot
 	if err := xml.Unmarshal(b, &rss); err != nil {
