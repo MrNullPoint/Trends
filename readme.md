@@ -69,8 +69,8 @@ func main() {
 }
 ```
 
-- **Rising keyword**
-- **Top Keyword**
+- **Rising Keywords**
+- **Top Keywords**
 
 ### TODO
 
